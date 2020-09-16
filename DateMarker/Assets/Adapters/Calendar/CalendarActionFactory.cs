@@ -5,11 +5,11 @@ public class CalendarActionFactory : ICalendarActionFactory
     {
         switch (mode)
         {
-            case CalendarMode.Year:
+            case CalendarMode.Month:
                 {
                     return new CalendarYearAction();
                 }
-            case CalendarMode.Month:
+            case CalendarMode.Days:
                 {
                     return new CalendarMonthAction();
                 }

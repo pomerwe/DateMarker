@@ -2,21 +2,11 @@
 {
     public override void LeftArrowAction(CalendarAdapter adapter)
     {
-        adapter.currentYear -= 1;
-        ReloadCalendar(adapter);
+        adapter.SetCurrentYear(adapter.currentYear - 1);
     }
 
     public override void RightArrowAction(CalendarAdapter adapter)
     {
-        adapter.currentYear += 1;
-        ReloadCalendar(adapter);
-    }
-
-    public override void ReloadCalendar(CalendarAdapter adapter)
-    {
-        adapter.ClearMonths();
-
-        adapter.LoadCalendar();
-        adapter.LoadMonths();
+        adapter.SetCurrentYear(adapter.currentYear + 1);
     }
 }

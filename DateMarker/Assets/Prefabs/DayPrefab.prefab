@@ -105,6 +105,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dayBackground: {fileID: 3783174654110538634}
   dayNumber: {fileID: 3783174654461368191}
+  outline: {fileID: 3783174654110538632}
+  isSelected: 0
 --- !u!1 &3783174654461368177
 GameObject:
   m_ObjectHideFlags: 0

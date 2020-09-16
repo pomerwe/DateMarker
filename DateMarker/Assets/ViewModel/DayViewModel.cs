@@ -2,13 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DayViewModel : MonoBehaviour
+public class DayViewModel : MonoBehaviour, IPointerClickHandler
 {
     public Image dayBackground;
     public Text dayNumber;
     public Day day;
+    public Outline outline;
 
     private Color32 todayColor = new Color32(210, 228, 255, 188);
     private Color32 normalColor = new Color32(171, 171, 171, 49);
@@ -19,9 +21,14 @@ public class DayViewModel : MonoBehaviour
     private bool isToday;
     private bool isFill = true;
 
+    public bool isSelected = false;
+
+    public Action<DayViewModel> onClickAction = null;
+
     public void Update()
     {
-        if(!isFill)
+        outline.enabled = isSelected;
+        if (!isFill)
         {
             isToday = DateTime.Now.Day == day.DayNumber && DateTime.Now.Year == day.Year && DateTime.Now.Month == day.Month;
             
@@ -49,8 +56,9 @@ public class DayViewModel : MonoBehaviour
         }
     }
 
-    public void SetModel(Day day)
+    public void SetModel(Day day, Action<DayViewModel> setCurrentDay)
     {
+        this.onClickAction = setCurrentDay;
         isFill = false;
 
         this.day = day;
@@ -60,5 +68,21 @@ public class DayViewModel : MonoBehaviour
     public void SetFillNumber(int number)
     {
         dayNumber.text = number.ToString();
+    }
+
+    
+    public void Select()
+    {
+        isSelected = true;
+    }
+
+    public void UnSelect()
+    {
+        isSelected = false;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        onClickAction?.Invoke(this);
     }
 }

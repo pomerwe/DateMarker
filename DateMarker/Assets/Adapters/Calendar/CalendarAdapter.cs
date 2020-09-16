@@ -15,6 +15,7 @@ public class CalendarAdapter : MonoBehaviour
     public GameObject monthPrefab;
 
     public GameObject daysBody;
+    public GameObject daysGroup;
     public GameObject dayPrefab;
 
     public List<GameObject> monthObjectList;
@@ -47,7 +48,7 @@ public class CalendarAdapter : MonoBehaviour
         LoadMonths();
         LoadDays();
 
-        currentCalendarMode = CalendarMode.Month;
+        currentCalendarMode = CalendarMode.Days;
     }
 
     public void LoadCalendar()
@@ -62,7 +63,7 @@ public class CalendarAdapter : MonoBehaviour
         {
             var instance = Instantiate(monthPrefab, monthBody.transform, false);
             MonthViewModel monthViewModel = instance.GetComponent<MonthViewModel>();
-            monthViewModel.SetModel(m);
+            monthViewModel.SetModel(m, OnMonthViewModelClick);
             monthObjectList.Add(instance);
         });
     }
@@ -80,7 +81,7 @@ public class CalendarAdapter : MonoBehaviour
         currentMonth.Days.ForEach(d =>
         {
             DayViewModel dayViewModel = InstantiateDayPrefab();
-            dayViewModel.SetModel(d);
+            dayViewModel.SetModel(d, SetCurrentDay);
         });
 
         NextDaysFill();
@@ -175,10 +176,103 @@ public class CalendarAdapter : MonoBehaviour
         var calendarActionFactory = new CalendarActionFactory();
         return calendarActionFactory.CreateCalendarAction(currentCalendarMode);
     }
+
+    public void SetCurrentDay(DayViewModel dayViewModel)
+    {
+        UnselectAllDays();
+        currentDay = dayViewModel.day;
+        dayViewModel.Select();
+    }
+
+    public void SetCurrentMonth(Month month)
+    {
+        currentMonth = month;
+        ClearDays();
+        LoadDays();
+        SetCalendarModeToDays();
+    }
+
+    public void OnMonthViewModelClick(MonthViewModel monthViewModel)
+    {
+        SetCurrentMonth(monthViewModel.month);
+    }
+
+    public void SetCurrentYear(int year)
+    {
+        currentYear = year;
+        ClearMonths();
+        LoadCalendar();
+        LoadMonths();
+    }
+
+    public void UnselectAllDays()
+    {
+        daysObjectList.ForEach(d => d.GetComponent<DayViewModel>().UnSelect());
+    }
+
+    public void SetCalendarModeToMonth()
+    {
+        currentCalendarMode = CalendarMode.Month;
+        ChangeToMonthsView();
+    }
+
+    public void SetCalendarModeToDays()
+    {
+        currentCalendarMode = CalendarMode.Days;
+        ChangeToDaysView();
+    }
+
+    public void UpdateTitleLabel()
+    {
+        switch (currentCalendarMode)
+        {
+            case CalendarMode.Year:
+                {
+                    break;
+                }
+            case CalendarMode.Month:
+                {
+                    monthName.gameObject.SetActive(false);
+                    yearNumber.gameObject.SetActive(true);
+                    break;
+                }
+            case CalendarMode.Days:
+                {
+                    monthName.gameObject.SetActive(true);
+                    yearNumber.gameObject.SetActive(false);
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+    }
+
+    public void ChangeToMonthsView()
+    {
+        HideAllViews();
+        monthBody.SetActive(true);
+        UpdateTitleLabel();
+    }
+
+    public void ChangeToDaysView()
+    {
+        HideAllViews();
+        daysGroup.SetActive(true);
+        UpdateTitleLabel();
+    }
+
+    public void HideAllViews()
+    {
+        daysGroup.SetActive(false);
+        monthBody.SetActive(false);
+    }
 }
 
 public enum CalendarMode
 {
     Year,
-    Month
+    Month,
+    Days
 }
