@@ -1,34 +1,49 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class Month 
+public class Month
 {
-    public string MonthName { get; set; }
-    public int MonthNumber { get; set; }
-    public List<Day> Days { get; set; }
+  public string MonthName { get; set; }
+  public int MonthNumber { get; set; }
+  public List<Day> Days { get; set; }
+  public int Year { get; set; }
 
-    public Month(string monthName, int month, int year)
+  public Month(string monthName, int month, int year)
+  {
+    Year = year;
+    MonthName = char.ToUpper(monthName[0]) + monthName.Substring(1);
+    MonthNumber = month;
+    Days = new List<Day>();
+    FillDays(year);
+  }
+
+  public void FillDays(int year)
+  {
+    var auxDate = new DateTime(year, MonthNumber, 1);
+
+    for (int i = 1; i <= CalendarUtils.GetMonthNumberOfDays(auxDate); i++)
     {
-        
-        MonthName = char.ToUpper(monthName[0]) + monthName.Substring(1);
-        MonthNumber = month;
-        Days = new List<Day>();
-        FillCalendar(year);
-    }
+      auxDate = new DateTime(year, MonthNumber, i);
+      int dayOfWeek = (int)auxDate.DayOfWeek;
 
-    public void FillCalendar(int year)
+      Day day = new Day((DayOfWeek)dayOfWeek, i, year, MonthNumber);
+      Days.Add(day);
+    }
+  }
+
+  public void FillEvents(List<DateMarkerEvent> dateMarkerEvents)
+  {
+    dateMarkerEvents.ForEach(d => 
     {
-        var auxDate = new DateTime(year, MonthNumber, 1);
+      GetDay(d.Start.Day).InsertEvent(d);
+    });
+  }
 
-        for (int i = 1; i <= CalendarUtils.GetMonthNumberOfDays(auxDate); i++)
-        {
-            auxDate = new DateTime(year, MonthNumber, i);
-            int dayOfWeek = (int)auxDate.DayOfWeek;
-
-            Day day = new Day((DayOfWeek)dayOfWeek, i, year, MonthNumber);
-            Days.Add(day);
-        }
-    }
+  public Day GetDay(int number)
+  {
+    return Days.FirstOrDefault(d => d.DayNumber == number);
+  }
 }

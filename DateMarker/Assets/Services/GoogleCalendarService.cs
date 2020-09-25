@@ -22,31 +22,31 @@ public class GoogleCalendarService : MonoBehaviour
   static string ApplicationName = "Date Marker";
   static string CALENDARID = "primary";
 
-  private GoogleCalendarService instance;
-  private GoogleCalendarService Instance 
-  { 
-    get 
+  private static GoogleCalendarService instance;
+  public static GoogleCalendarService Instance
+  {
+    get
     {
-      if(instance == null)
+      if (instance == null)
       {
         instance = FindObjectOfType<GoogleCalendarService>();
       }
-      return this.instance;
+      return instance;
     }
   }
 
+  private CalendarService googleService;
 
-  private CalendarService googleService; 
-
-  public void Start()
+  public void Awake()
+  {
+    CreateGoogleService();
+  }
+  public void CreateGoogleService()
   {
     UserCredential credential;
 
-    using (var stream =
-        new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
+    using (var stream = new FileStream("credentials.json", FileMode.Open, FileAccess.Read))
     {
-      // The file token.json stores the user's access and refresh tokens, and is created
-      // automatically when the authorization flow completes for the first time.
       string credPath = "token.json";
       credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
           GoogleClientSecrets.Load(stream).Secrets,
@@ -54,10 +54,8 @@ public class GoogleCalendarService : MonoBehaviour
           "user",
           CancellationToken.None,
           new FileDataStore(credPath, true)).Result;
-      Console.WriteLine("Credential file saved to: " + credPath);
     }
 
-    // Create Google Calendar API service.
     googleService = new CalendarService(new BaseClientService.Initializer()
     {
       HttpClientInitializer = credential,
@@ -65,41 +63,54 @@ public class GoogleCalendarService : MonoBehaviour
     });
   }
 
-  public GoogleData.Event CreateEvent(DateMarkerEvent dateMarkerEvent)
+  public DateMarkerEvent InsertEvent(DateMarkerEvent dateMarkerEvent)
   {
-    var googleEvent = new GoogleData.Event()
-    {
-      Start = new EventDateTime() { DateTime = dateMarkerEvent.Start },
-      End = new EventDateTime() { DateTime = dateMarkerEvent.End },
-      Description = dateMarkerEvent.Description,
-      Summary = dateMarkerEvent.Title
-    };
+    EventsResource.InsertRequest insertRequest = googleService.Events.Insert(dateMarkerEvent.GoogleEvent, CALENDARID);
 
-    return googleEvent;
+    return insertRequest.Execute().ToDateMarkerEvent();
   }
 
-  public void InsertEvent(DateMarkerEvent dateMarkerEvent)
-  {
-    var googleEvent = CreateEvent(dateMarkerEvent);
-
-    EventsResource.InsertRequest insertRequest = googleService.Events.Insert(googleEvent, CALENDARID);
-    insertRequest.Execute();
-  }
-
-  public Events GetEvents()
+  public List<DateMarkerEvent> GetMonthEvents(Month month)
   {
     EventsResource.ListRequest getRequest = googleService.Events.List(CALENDARID);
-    getRequest.TimeMin = DateTime.Now;
+    getRequest.TimeMin = new DateTime(month.Year, month.MonthNumber, month.Days.First().DayNumber, 00, 00, 00);
+    getRequest.TimeMax = new DateTime(month.Year, month.MonthNumber, month.Days.Last().DayNumber, 23, 59, 59);
     getRequest.ShowDeleted = false;
     getRequest.SingleEvents = true;
-    getRequest.MaxResults = 10;
+    getRequest.MaxResults = 999;
     getRequest.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
-    return getRequest.Execute();
+    return getRequest.Execute().ToDateMarkerEvents();
+  }
+
+  public List<DateMarkerEvent> GetYearEvents(Calendar calendar)
+  {
+    EventsResource.ListRequest getRequest = googleService.Events.List(CALENDARID);
+
+    var startMonth = calendar.Months.First().MonthNumber;
+    var startDay = calendar.Months.First().Days.First().DayNumber;
+    getRequest.TimeMin = new DateTime(calendar.Year, startMonth, startDay, 00, 00 ,00);
+
+    var endMonth = calendar.Months.Last().MonthNumber;
+    var endDay = calendar.Months.Last().Days.Last().DayNumber;
+    getRequest.TimeMax = new DateTime(calendar.Year, endMonth, endDay, 23, 59 ,59);
+
+    getRequest.ShowDeleted = false;
+    getRequest.SingleEvents = true;
+    getRequest.MaxResults = 999;
+    getRequest.OrderBy = EventsResource.ListRequest.OrderByEnum.StartTime;
+    return getRequest.Execute().ToDateMarkerEvents();
   }
 
   public void DeleteEvent(DateMarkerEvent dateMarkerEvent)
   {
     var deleteRequest = googleService.Events.Delete(CALENDARID, dateMarkerEvent.GoogleEvent.Id);
     deleteRequest.Execute();
+  }
+
+  public DateMarkerEvent UpdateEvent(DateMarkerEvent dateMarkerEvent)
+  {
+    var updateRequest = googleService.Events.Update(dateMarkerEvent.GoogleEvent, CALENDARID, dateMarkerEvent.GoogleEvent.Id);
+
+    return updateRequest.Execute().ToDateMarkerEvent();
   }
 }
