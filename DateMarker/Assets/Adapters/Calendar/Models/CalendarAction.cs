@@ -1,5 +1,5 @@
-﻿public abstract class CalendarAction
+﻿public interface CalendarAction 
 {
-    public abstract void LeftArrowAction(CalendarAdapter adapter);
-    public abstract void RightArrowAction(CalendarAdapter adapter);
+    void LeftArrowAction(CalendarAdapter adapter);
+    void RightArrowAction(CalendarAdapter adapter);
 }

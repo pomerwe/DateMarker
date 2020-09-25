@@ -1,11 +1,11 @@
 ﻿public class CalendarMonthAction : CalendarAction
 {
-    public override void LeftArrowAction(CalendarAdapter adapter)
+    public void LeftArrowAction(CalendarAdapter adapter)
     {
         adapter.SetCurrentMonth(adapter.GetPreviousMonth());
     }
 
-    public override void RightArrowAction(CalendarAdapter adapter)
+    public void RightArrowAction(CalendarAdapter adapter)
     {
         adapter.SetCurrentMonth(adapter.GetNextMonth());
     }
