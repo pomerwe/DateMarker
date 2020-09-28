@@ -308,9 +308,16 @@ C:\Users\estev\Desktop\DateMarker\New Unity Project\obj\Debug\Assembly-CSharp.dl
 C:\Users\estev\Desktop\DateMarker\New Unity Project\obj\Debug\Assembly-CSharp.pdb
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Assembly-CSharp.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.Auth.dll
+C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.Auth.PlatformServices.dll
+C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.Calendar.v3.dll
+C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.Core.dll
+C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.dll
+C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.PlatformServices.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Microsoft.Win32.Primitives.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\mscorlib.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\netstandard.dll
+C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Newtonsoft.Json.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\PsdPlugin.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\System.AppContext.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\System.Collections.Concurrent.dll
@@ -509,13 +516,6 @@ C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\UnityEngine.VideoMod
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\UnityEngine.VRModule.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\UnityEngine.WindModule.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\UnityEngine.XRModule.dll
-C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.Auth.dll
-C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.Auth.PlatformServices.dll
-C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.Calendar.v3.dll
-C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.Core.dll
-C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.dll
-C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Google.Apis.PlatformServices.dll
-C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Newtonsoft.Json.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\UnityEngine.ClusterInputModule.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\UnityEngine.ClusterRendererModule.dll
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\Unity.CompilationPipeline.Common.dll
@@ -616,7 +616,6 @@ C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\UnityEngine.ClusterI
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\UnityEngine.ClusterRendererModule.xml
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\UnityEditor.TestRunner.pdb
 C:\Users\estev\Desktop\DateMarker\DateMarker\Temp\bin\Debug\UnityEngine.TestRunner.pdb
-C:\Users\estev\Desktop\DateMarker\DateMarker\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
 C:\Users\estev\Desktop\DateMarker\DateMarker\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\Users\estev\Desktop\DateMarker\DateMarker\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\estev\Desktop\DateMarker\DateMarker\obj\Debug\Assembly-CSharp.dll

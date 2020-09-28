@@ -4,54 +4,54 @@ using UnityEngine;
 
 public class AddEventView : MonoBehaviour
 {
-  public float translateRate = 0.3f;
+    private float translateRate = 8f;
 
-  bool isEnabled = false;
-  public void Update()
-  {
-    if(isEnabled)
+    bool isEnabled = false;
+    public void Update()
     {
-      Ascend();
+        if (isEnabled)
+        {
+            Ascend();
+        }
+        else
+        {
+            Descend();
+        }
     }
-    else
+    public void Open()
     {
-      Descend();
+        isEnabled = true;
     }
-  }
-  public void Open()
-  {
-    isEnabled = true;
-  }
-  public void Close()
-  {
-    isEnabled = false;
-  }
+    public void Close()
+    {
+        isEnabled = false;
+    }
 
-  public void Descend()
-  {
-    var transform = GetComponent<RectTransform>();
-    var height = transform.sizeDelta.y;
-    if (transform.anchoredPosition.y <= -height)
+    public void Descend()
     {
-      transform.anchoredPosition = new Vector2(0, -height);
+        var transform = GetComponent<RectTransform>();
+        var height = transform.sizeDelta.y;
+        if (transform.anchoredPosition.y <= -height)
+        {
+            transform.anchoredPosition = new Vector2(0, -height);
+        }
+        else
+        {
+            transform.Translate(new Vector2(0, -translateRate));
+        }
     }
-    else
-    {
-      transform.Translate(new Vector2(0, -translateRate));
-    }
-  }
 
-  public void Ascend()
-  {
-    var transform = GetComponent<RectTransform>();
-    if (transform.anchoredPosition.y >= 0)
+    public void Ascend()
     {
-      transform.anchoredPosition = new Vector2(0, 0);
+        var transform = GetComponent<RectTransform>();
+        if (transform.anchoredPosition.y >= 0)
+        {
+            transform.anchoredPosition = new Vector2(0, 0);
+        }
+        else
+        {
+            transform.Translate(new Vector2(0, translateRate));
+        }
     }
-    else
-    {
-      transform.Translate(new Vector2(0, translateRate));
-    }
-  }
 
 }

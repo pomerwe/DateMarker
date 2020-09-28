@@ -9,84 +9,86 @@ using System.Threading.Tasks;
 
 public class DateMarkerEvent
 {
-  private string title;
-  public string Title 
-  { 
-    get
+    private string title;
+    public string Title
     {
-      return title;
-    }
-    set
-    {
-      title = value;
-      GoogleEvent.Summary = title;
-    }
-  }
+        get
+        {
+            return title;
+        }
+        set
+        {
+            title = value;
 
-  private DateTime start;
-  public DateTime Start
-  {
-    get
-    {
-      return start;
+            GoogleEvent.Summary = title;
+        }
     }
-    set
-    {
-      start = value;
-      GoogleEvent.Start.DateTime = start;
-    }
-  }
 
-  public DateTime end;
-  public DateTime End
-  {
-    get
+    private DateTime start;
+    public DateTime Start
     {
-      return end;
+        get
+        {
+            return start;
+        }
+        set
+        {
+            start = value;
+            GoogleEvent.Start.DateTime = start;
+        }
     }
-    set
-    {
-      end = value;
-      GoogleEvent.End.DateTime = end;
-    }
-  }
 
-  public string description;
-  public string Description
-  {
-    get
+    private DateTime end;
+    public DateTime End
     {
-      return description;
+        get
+        {
+            return end;
+        }
+        set
+        {
+            end = value;
+            GoogleEvent.End.DateTime = end;
+        }
     }
-    set
+
+    private string description;
+    public string Description
     {
-      description = value;
-      GoogleEvent.Description = description;
+        get
+        {
+            return description;
+        }
+        set
+        {
+            description = value;
+            GoogleEvent.Description = description;
+        }
     }
-  }
-  public Event GoogleEvent { get; }
+    public Event GoogleEvent { get; }
 
-  public DateMarkerEvent(string title, DateTime start, DateTime end, string description)
-  {
-    Title = title;
-    Start = start;
-    End = end;
-    Description = description;
-    GoogleEvent = new Event()
+    public DateMarkerEvent(string title, DateTime start, DateTime end, string description)
     {
-      Start = new EventDateTime() { DateTime = Start },
-      End = new EventDateTime() { DateTime = End },
-      Description = Description,
-      Summary = Title
-    };
-  }
+        GoogleEvent = new Event()
+        {
+            Start = new EventDateTime() { DateTime = Start },
+            End = new EventDateTime() { DateTime = End },
+            Description = Description,
+            Summary = Title
+        };
+        Title = title;
+        Start = start;
+        End = end;
+        Description = description;
 
-  public DateMarkerEvent(Event googleEvent)
-  {
-    GoogleEvent = googleEvent;
-    Title = googleEvent.Summary;
-    Start = (DateTime)googleEvent.Start.DateTime;
-    End = (DateTime)googleEvent.End.DateTime;
-    Description = googleEvent.Description;
-  }
+    }
+
+    public DateMarkerEvent(Event googleEvent)
+    {
+        GoogleEvent = googleEvent;
+        Title = googleEvent.Summary;
+        Start = (DateTime)googleEvent.Start.DateTime;
+        End = (DateTime)googleEvent.End.DateTime;
+        Description = googleEvent.Description;
+    }
 }
